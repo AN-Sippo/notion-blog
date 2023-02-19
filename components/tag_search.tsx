@@ -16,14 +16,12 @@ const Tag_Search:FC<propsToHandleTags> = (props:propsToHandleTags) =>{
         >
             <GridItem bg="whitesmoke" borderRadius="1rem" m="0.4rem" h="6rem">
                 {
-                    Object.keys(allTags).map((tag_name)=>{
+                    Object.keys(allTags).filter(tag_name=>allTags[tag_name].selected).map((tag_name)=>{
                         const tag = allTags[tag_name];
                         return(
-                        tag.selected ?
-                            <Box m="0.2rem" display="inline-block">
+                            <Box m="0.2rem" display="inline-block" key={tag_name}>
                                 <SearchTagInBox name={tag.name} color={tag.color} selected={tag.selected} setTagState={setTagState}/>
                             </Box>
-                            :<></>
                             )
                     })
                 }
@@ -31,9 +29,10 @@ const Tag_Search:FC<propsToHandleTags> = (props:propsToHandleTags) =>{
             <GridItem width="100%">
                 {
                     Object.keys(allTags).map((tag_name)=>{
+
                         const tag = allTags[tag_name];
                         return (
-                        <Box margin="1%" marginLeft="5%" display="inline-block">
+                        <Box margin="1%" marginLeft="5%" display="inline-block" key={tag_name}>
                             <SearchTag name={tag.name} color={tag.color} selected={tag.selected} setTagState={setTagState}/>
                         </Box>
                         )

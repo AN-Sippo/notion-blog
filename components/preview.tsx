@@ -30,7 +30,7 @@ const PagePreview:FC<PagePreviewProps> = (props:PagePreviewProps)=>{
             <CardFooter padding="0" m="0" h="30%">
                 <Center m="0" padding="0">
                     <Flex w="80%" gap='3' display="inline-block" margin="0" padding="0">
-                        {pageobj.tags.map(tag=><Badge fontSize="0.5em" variant="subtle" colorScheme={tag.color} marginLeft="0.2rem">{tag.name}</Badge>)}
+                        {pageobj.tags.map(tag=><Badge fontSize="0.5em" variant="subtle" colorScheme={tag.color} marginLeft="0.2rem" key={tag.name}>{tag.name}</Badge>)}
                     </Flex>
                 </Center>
             </CardFooter>

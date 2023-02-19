@@ -8,7 +8,7 @@ export const Paragraph:FC<paragraph_block> = (props) =>{
     return (
         <Box padding="0.2%">
             <Center >
-            {content.map((rtx)=><RichText {...rtx}/>)}
+            {content.map((rtx,idx)=><RichText {...rtx} key={idx}/>)}
             </Center>
         </Box>
     )

@@ -51,6 +51,7 @@ export type code_block = base_block & {
 export type image_block = {
     this_block:"image_block"
     content:file_block
+    id:string
 }
 
 export type any_block = heading_block | rich_text_block | heading_block | code_block |image_block | paragraph_block 

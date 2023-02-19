@@ -15,7 +15,6 @@ type results_inside = {
 
 
 const parse_response = (block_l:any):results_inside =>{
-    console.log(block_l)
     const results:Array<any> = block_l.results 
     let res:Array<any_block> = []
     for (const result of results){
@@ -40,7 +39,7 @@ const parse_response = (block_l:any):results_inside =>{
 
             case "image":
                 const url:string = result.image.file.url;
-                block = {this_block:"image_block",content:{url:url,this_block:"file_block"}} as image_block
+                block = {this_block:"image_block",content:{url:url,this_block:"file_block"},id:result.id} as image_block
                 res.push(block)
                 break;
             
@@ -57,7 +56,8 @@ const parse_response = (block_l:any):results_inside =>{
                     } as rich_text_block)
                     }),
                     this_block:"code_block",
-                    language:result.code.language
+                    language:result.code.language,
+                    id:result.id
                 } as code_block
                 res.push(block)
                 break;
@@ -73,11 +73,11 @@ const parse_response = (block_l:any):results_inside =>{
 const swicher = (one_block:any_block) =>{
     switch (one_block.this_block){
         case "paragraph_block":
-            return <Paragraph {...one_block}/>
+            return <Paragraph {...one_block} key={one_block.id}/>
         case "image_block":
-            return <ImageNotion {...one_block}/>
+            return <ImageNotion {...one_block} key={one_block.id}/>
         case "code_block":
-            return <CodeNotion {...one_block}/>
+            return <CodeNotion {...one_block} key={one_block.id}/>
     }
 }
 
@@ -91,13 +91,11 @@ const Page:FC<PageObj> = () =>{
         const fetcher = async () =>{
             const res =  await fetch(`/api/${pid}`)
             const res1 = await res.json()
-            console.log(res1)
             return parse_response(res1)
         }
         fetcher().then((res)=>{
             // next cursorは一旦破棄
             setContents(res.content)
-            console.log(contents)
         })
     },[])
     

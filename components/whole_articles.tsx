@@ -34,7 +34,7 @@ const  WholeArtilcles:FC<{content:Array<PageObj>}> = (props:{content:Array<PageO
       <GridItem onClick={()=>console.log(content)} bg="white"/>
       {
       content.length > 0 ?
-        content.map(item => <GridItem w="100%" h="100%" colSpan={1} rowSpan={1} ><PagePreview page={item}/></GridItem>)
+        content.map(item => <GridItem w="100%" h="100%" colSpan={1} rowSpan={1} key={item.name}><PagePreview page={item}/></GridItem>)
         :<Text>記事がありません</Text>
       }
 
