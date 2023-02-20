@@ -15,7 +15,7 @@ type results_inside = {
 
 
 const parse_response = (block_l:any):results_inside =>{
-    const results:Array<any> = block_l.results 
+    const results:Array<any> = block_l
     let res:Array<any_block> = []
     for (const result of results){
         const type = result.type;
