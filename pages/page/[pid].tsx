@@ -2,11 +2,13 @@ import {useState,useEffect,FC} from "react"
 import {Box,Divider,Heading,VStack} from "@chakra-ui/react"
 import type { PageObj } from "@/utils/process_page"
 import { useRouter } from "next/router"
-import type { rich_text_block,heading_block,image_block,paragraph_block,code_block,any_block } from "@/utils/block_type"
+import type { rich_text_block,heading_block,image_block,paragraph_block,code_block,any_block,bookmark_block } from "@/utils/block_type"
 import { RichText } from "@/components/rich_text"
 import { Paragraph } from "@/components/paragraph"
 import { ImageNotion } from "@/components/image"
 import { CodeNotion } from "@/components/code"
+import { NotionHeading } from "@/components/heading"
+import { Bookmark } from "@/components/bookmark"
 
 type results_inside = {
     content:Array<any_block>
@@ -61,7 +63,69 @@ const parse_response = (block_l:any):results_inside =>{
                 } as code_block
                 res.push(block)
                 break;
-
+            case "heading_1":
+                block = {
+                    this_block:"heading_block",
+                    type:"1",
+                    content:result.heading_1.rich_text.map((richt:any)=>{
+                        return({
+                            this_block:"rich_text_block",
+                            type: richt.type,
+                            link:richt.text.link,
+                            content:richt.plain_text,
+                            annotations: richt.annotations,
+                            href:richt.href,
+                        } as rich_text_block)}
+                        ),
+                    color:"string",
+                } as heading_block
+                res.push(block)
+                break;
+            case "heading_2":
+                block = {
+                    this_block:"heading_block",
+                    type:"2",
+                    content:result.heading_2.rich_text.map((richt:any)=>{
+                        return({
+                            this_block:"rich_text_block",
+                            type: richt.type,
+                            link:richt.text.link,
+                            content:richt.plain_text,
+                            annotations: richt.annotations,
+                            href:richt.href,
+                        } as rich_text_block)}
+                        ),
+                    color:"string",
+                } as heading_block
+                res.push(block)
+                break;
+            case "heading_3":
+                block = {
+                    this_block:"heading_block",
+                    type:"3",
+                    content:result.heading_3.rich_text.map((richt:any)=>{
+                        return({
+                            this_block:"rich_text_block",
+                            type: richt.type,
+                            link:richt.text.link,
+                            content:richt.plain_text,
+                            annotations: richt.annotations,
+                            href:richt.href,
+                        } as rich_text_block)}
+                        ),
+                    color:"string",
+                } as heading_block
+                res.push(block)
+                break;
+            
+            case "bookmark":
+                block = {
+                    id:result.id,
+                    content:result.bookmark.url,
+                    this_block:"bookmark_block"
+                } as bookmark_block
+                res.push(block)
+                break;
         }
     }// end of results loop
     return {
@@ -70,7 +134,7 @@ const parse_response = (block_l:any):results_inside =>{
     };
 }   
 
-const swicher = (one_block:any_block) =>{
+const swicher = (one_block:any_block,idx:number) =>{
     switch (one_block.this_block){
         case "paragraph_block":
             return <Paragraph {...one_block} key={one_block.id}/>
@@ -78,6 +142,10 @@ const swicher = (one_block:any_block) =>{
             return <ImageNotion {...one_block} key={one_block.id}/>
         case "code_block":
             return <CodeNotion {...one_block} key={one_block.id}/>
+        case "heading_block":
+            return <NotionHeading {...one_block} key={idx}/>
+        case "bookmark_block":
+            return <Bookmark {...one_block} key={idx}/>
     }
 }
 
@@ -106,9 +174,9 @@ const Page:FC<PageObj> = () =>{
                 <Heading>{title}</Heading>
             </Box>
             <Divider/>
-            <Box>
+            <Box padding="2rem"> 
             {
-                contents.map(i=>swicher(i))
+                contents.map((i,idx)=>swicher(i,idx))
             }
             </Box>
         </VStack>

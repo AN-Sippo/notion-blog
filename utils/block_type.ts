@@ -37,7 +37,7 @@ export type heading_block = base_block & {
     this_block:"heading_block"
     type:"1"|"2"|"3"
     content:rich_text_block,
-    color:"string"
+    color:string
 }
 
 export type code_block = base_block & {
@@ -54,4 +54,9 @@ export type image_block = {
     id:string
 }
 
-export type any_block = heading_block | rich_text_block | heading_block | code_block |image_block | paragraph_block 
+export type bookmark_block = base_block & {
+    this_block : "bookmark_block"
+    content:string
+}
+
+export type any_block = heading_block | rich_text_block | heading_block | code_block |image_block | paragraph_block |bookmark_block
