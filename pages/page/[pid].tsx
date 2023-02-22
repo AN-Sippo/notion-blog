@@ -11,6 +11,7 @@ import { NotionHeading } from "@/components/heading"
 import { Bookmark } from "@/components/bookmark"
 import { Quote } from "@/components/quote"
 import { BulletedList } from "@/components/bulleted_list"
+import { useWindowSize } from "@/utils/hooks"
 
 type results_inside = {
     content:Array<any_block>
@@ -195,12 +196,14 @@ const Page:FC<PageObj> = () =>{
     const pid = router.query.pid as string;
     const title = router.query.title as string;
     const [contents,setContents] = useState<Array<any_block>>([])
+    const size =useWindowSize();
+
+    const w = size[0];
 
     useEffect(()=>{
         const fetcher = async () =>{
             const res =  await fetch(`/api/${pid}`)
             const res1 = await res.json()
-            console.log(res1)
             return parse_response(res1)
         }
         fetcher().then((res)=>{
@@ -211,7 +214,8 @@ const Page:FC<PageObj> = () =>{
     
 
     return (
-        <VStack>
+        <div >
+        <VStack maxW="1280px" marginLeft={`${Math.max((w-1280)/2,0)}px`} bg="whitesmoke">
             <Box m="1rem">
                 <Heading>{title}</Heading>
             </Box>
@@ -222,6 +226,7 @@ const Page:FC<PageObj> = () =>{
             }
             </Box>
         </VStack>
+        </div>
     )
 }
 

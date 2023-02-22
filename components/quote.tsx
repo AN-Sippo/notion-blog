@@ -15,7 +15,6 @@ const QuoteDiv = styled.div`
 `
 
 export const Quote:FC<quote_block> = (props)=>{
-    console.log(props)
     return (
         <QuoteDiv>
             {props.content.map((richt:rich_text_block,idx:number)=><Text key={idx}>{richt.content}</Text>)}

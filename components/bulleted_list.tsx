@@ -10,7 +10,7 @@ const BulletedListUl = styled.ul`
 export const BulletedList:FC<bulleted_list_block> = (props)=>{
     return (
         <BulletedListUl>
-            {props.content.map((richt:rich_text_block,idx:number)=><li>{richt.content}</li>)}
+            {props.content.map((richt:rich_text_block,idx:number)=><li key={idx}>{richt.content}</li>)}
         </BulletedListUl>
     )
 }
