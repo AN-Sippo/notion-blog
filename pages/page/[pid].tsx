@@ -2,13 +2,15 @@ import {useState,useEffect,FC} from "react"
 import {Box,Divider,Heading,VStack} from "@chakra-ui/react"
 import type { PageObj } from "@/utils/process_page"
 import { useRouter } from "next/router"
-import type { rich_text_block,heading_block,image_block,paragraph_block,code_block,any_block,bookmark_block } from "@/utils/block_type"
+import type { rich_text_block,heading_block,image_block,paragraph_block,code_block,any_block,bookmark_block,quote_block ,bulleted_list_block} from "@/utils/block_type"
 import { RichText } from "@/components/rich_text"
 import { Paragraph } from "@/components/paragraph"
 import { ImageNotion } from "@/components/image"
 import { CodeNotion } from "@/components/code"
 import { NotionHeading } from "@/components/heading"
 import { Bookmark } from "@/components/bookmark"
+import { Quote } from "@/components/quote"
+import { BulletedList } from "@/components/bulleted_list"
 
 type results_inside = {
     content:Array<any_block>
@@ -126,6 +128,41 @@ const parse_response = (block_l:any):results_inside =>{
                 } as bookmark_block
                 res.push(block)
                 break;
+            
+            case "quote":
+                block = {
+                    this_block:"quote_block",
+                    content:result.quote.rich_text.map((richt:any)=>{
+                        return({
+                            this_block:"rich_text_block",
+                            type: richt.type,
+                            link:richt.text.link,
+                            content:richt.plain_text,
+                            annotations: richt.annotations,
+                            href:richt.href,
+                        } as rich_text_block)}
+                        ),
+                    id:result.id,
+                }
+                res.push(block)
+                break;
+            
+            case "bulleted_list_item":
+                block = {
+                    this_block:"bulleted_list_block",
+                    content:result.bulleted_list_item.rich_text.map((richt:any)=>{
+                        return({
+                            this_block:"rich_text_block",
+                            type: richt.type,
+                            link:richt.text.link,
+                            content:richt.plain_text,
+                            annotations: richt.annotations,
+                            href:richt.href,
+                        } as rich_text_block)}
+                    ),
+                } as bulleted_list_block
+                res.push(block)
+                break;
         }
     }// end of results loop
     return {
@@ -146,6 +183,10 @@ const swicher = (one_block:any_block,idx:number) =>{
             return <NotionHeading {...one_block} key={idx}/>
         case "bookmark_block":
             return <Bookmark {...one_block} key={idx}/>
+        case "quote_block":
+            return <Quote {...one_block} key={idx}/>
+        case "bulleted_list_block":
+            return <BulletedList {...one_block} key={idx}/>
     }
 }
 
@@ -159,6 +200,7 @@ const Page:FC<PageObj> = () =>{
         const fetcher = async () =>{
             const res =  await fetch(`/api/${pid}`)
             const res1 = await res.json()
+            console.log(res1)
             return parse_response(res1)
         }
         fetcher().then((res)=>{

@@ -19,7 +19,7 @@ const Sider:FC<propsToHandleTags> = (props:propsToHandleTags) =>{
     const size = useWindowSize();
     const w = size[0];
     
-    const self_introduction = "学生とエンジニアを兼業しています。3つのハッカソンで優秀賞受賞経験あり。web系を中心に幅広い分野に興味を持ち、活動中。"
+    const self_introduction = "機械学習・Flutter・webなど。最近は、web(特にReact)にはまっている。"
     return (
     <Box  w="100%" borderLeft="solid whitesmoke" h="100%"> {/* サイド全体のラッパー */}
         <Stack  w="100%" h="100%">

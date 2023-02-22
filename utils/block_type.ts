@@ -59,4 +59,14 @@ export type bookmark_block = base_block & {
     content:string
 }
 
-export type any_block = heading_block | rich_text_block | heading_block | code_block |image_block | paragraph_block |bookmark_block
+export type quote_block = base_block & {
+    this_block:"quote_block"
+    content:Array<rich_text_block>
+}
+
+export type bulleted_list_block = base_block & {
+    this_block:"bulleted_list_block"
+    content:Array<rich_text_block>
+}
+
+export type any_block = heading_block | rich_text_block | heading_block | code_block |image_block | paragraph_block |bookmark_block | quote_block | bulleted_list_block

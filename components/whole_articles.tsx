@@ -25,7 +25,10 @@ const  WholeArtilcles:FC<{content:Array<PageObj>}> = (props:{content:Array<PageO
     let autoRows = "100px"
     if (size[0]*0.7 <= 500){templateColumns=`${size[0] * 0.6}px`;autoRows=`${size[0]*0.6}px`}
     else if (size[0]*0.7 <= 1000){templateColumns=`${size[0]*0.3}px `.repeat(2);autoRows=`${size[0]*0.3}px`}
-    else if (size[0]*0.7 > 1000){templateColumns="1fr 1fr 1fr";autoRows=`400px`}
+    else if (size[0]*0.7 <= 1500){templateColumns="1fr 1fr 1fr";autoRows=`600px`}
+    else if (size[0]*0.7 <= 1500){templateColumns="1fr 1fr 1fr";autoRows=`800px`}
+    else if (size[0]*0.7 <= 4000){templateColumns="1fr 1fr 1fr";autoRows=`1000px`}
+    else if (size[0]*0.7 > 4000){templateColumns="1fr 1fr 1fr";autoRows=`2000px`}
 
 
   return (
