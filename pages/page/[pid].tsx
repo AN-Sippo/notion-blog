@@ -215,7 +215,7 @@ const Page:FC<PageObj> = () =>{
 
     return (
         <div >
-        <VStack maxW="1280px" marginLeft={`${Math.max((w-1280)/2,0)}px`} bg="whitesmoke">
+        <VStack minW="400px" w="70%" maxW="1280px" marginLeft={`${w*0.85 > 1280 ? `${Math.max((w-1280)/2,0)}px`:"15%"}`} bg="rgb(220,220,220)">
             <Box m="1rem">
                 <Heading>{title}</Heading>
             </Box>
