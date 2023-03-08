@@ -220,7 +220,7 @@ const Page:FC<PageObj> = () =>{
                 <Heading>{title}</Heading>
             </Box>
             <Divider/>
-            <Box padding="2rem"> 
+            <Box padding="2rem" w='100%'> 
             {
                 contents.map((i,idx)=>swicher(i,idx))
             }
